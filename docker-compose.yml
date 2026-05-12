@@ -1,0 +1,48 @@
+services:
+  # -----------------------------------------------------------
+  # CONTENEDOR 1: LA BASE DE DATOS MYSQL
+  # -----------------------------------------------------------
+  db-servicio:
+    image: mysql:8.0
+    container_name: mysql_carrito
+    environment:
+      MYSQL_ROOT_PASSWORD: clave_maestra_root
+      MYSQL_DATABASE: CarroDB
+      MYSQL_USER: desarrollador
+      MYSQL_PASSWORD: Duoc.12345
+    ports:
+      - "3309:3306"
+    networks:
+      - red_interna_proyecto
+    volumes:
+      - persistencia_carrito:/var/lib/mysql
+
+  # -----------------------------------------------------------
+  # CONTENEDOR 2: EL ENTORNO DE TRABAJO JAVA/SPRING BOOT
+  # -----------------------------------------------------------
+  workspace-java:
+    image: maven:3.9-eclipse-temurin-21
+    container_name: entorno_carrito
+    ports:
+      - "8083:8083"
+    environment:
+      - PRODUCTO_URL=http://172.31.81.180:8080
+    depends_on:
+      - db-servicio
+    networks:
+      - red_interna_proyecto
+    # El comando 'tail -f /dev/null' es un truco técnico.
+    # Obliga al contenedor a quedarse encendido de forma permanente 
+    # en estado de espera, para que podamos entrar a él a programar.
+    command: tail -f /dev/null
+    # Vinculamos la carpeta vacía local con la ruta '/app' del contenedor.
+    volumes:
+      - ./codigo-fuente:/app
+    # Por defecto, el contenedor iniciará en la carpeta /app
+    working_dir: /app
+  
+networks:
+  red_interna_proyecto:
+
+volumes:
+  persistencia_carrito:
