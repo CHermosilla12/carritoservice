@@ -32,6 +32,11 @@ public class CarritoService {
                 .collect(Collectors.toList());
     }
 
+    public Carrito obtenerPorId(Long id) {
+        return carritoRepository.findById(id)
+                .orElseThrow(() -> new NoEncontradoException("El carrito con ID " + id + " no existe."));
+    }
+
     public ProductoDTO obtenerProductoDelCarrito(Long id, Long productoId) {
         log.info("Obteniendo detalle de producto del carrito con ID: {} y producto ID: {}", id, productoId);
 

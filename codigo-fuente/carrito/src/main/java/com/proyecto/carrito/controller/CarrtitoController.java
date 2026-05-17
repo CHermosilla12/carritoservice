@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import com.proyecto.carrito.dto.*;
+import com.proyecto.carrito.model.Carrito;
 import com.proyecto.carrito.service.CarritoService;
 import jakarta.validation.Valid;
 
@@ -19,35 +20,35 @@ public class CarrtitoController {
         this.service = service;
     }
 
-    // 1. Listar todos los carritos de la base de datos
     @GetMapping
     public List<CarritoDTO> listarTodo() {
         return service.obtenerCarrito();
     }
 
-    // 2. Crear un nuevo carrito agregándole un producto inicial
+    @GetMapping("/{id}")
+    public ResponseEntity<Carrito> obtenerCarrito(@PathVariable Long id) {
+        Carrito carrito = service.obtenerPorId(id);
+        return ResponseEntity.ok(carrito);
+    }
+
     @PostMapping
     public ResponseEntity<CarritoDTO> agregarItem(@Valid @RequestBody List<CarritoCreateDTO> carritos) {
         CarritoDTO carritoDTO = service.crearCarritoDTO(carritos);
         return new ResponseEntity<>(carritoDTO, HttpStatus.CREATED);
     }
 
-    // 3. Obtener el detalle completo de un producto específico dentro de un carrito
     @GetMapping("/{id}/productos/{productoId}")
     public ResponseEntity<ProductoDTO> obtenerProductoDelCarrito(@PathVariable Long id, @PathVariable Long productoId) {
         ProductoDTO producto = service.obtenerProductoDelCarrito(id, productoId);
         return ResponseEntity.ok(producto);
     }
 
-    // 4. Actualizar la cantidad de copias de una carta en un carrito específico
     @PutMapping("/{id}/productos/{productoId}")
     public ResponseEntity<CarritoDTO> actualizarCantidad(
             @PathVariable Long id,
             @PathVariable Long productoId,
             @RequestBody Map<String, Integer> body) { // <- Cambiado a @RequestBody
 
-        // Validamos que el JSON contenga la clave "cantidad" para evitar
-        // NullPointerException
         if (body == null || !body.containsKey("cantidad")) {
             throw new RuntimeException("El cuerpo de la petición debe contener el campo 'cantidad'");
         }
