@@ -1,0 +1,323 @@
+{
+  "info": {
+    "_postman_id": "058a92a0-2c83-4e6b-a0fc-9c3d822430f0",
+    "name": "hito2-integracion",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53434144",
+    "_collection_link": "https://go.postman.co/collection/53434144-058a92a0-2c83-4e6b-a0fc-9c3d822430f0?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "POST Crear Producto - Caso Exito",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\": \"Pachirisu EX\",\r\n    \"descripcion\" : \"PTCG pocket trade\",\r\n    \"precio\": 200\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://44.204.24.19:8080/api/productos/auto",
+          "protocol": "http",
+          "host": [
+            "44",
+            "204",
+            "24",
+            "19"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "productos",
+            "auto"
+          ]
+        },
+        "description": "Este flujo valida el ciclo de vida correcto y esperado del sistema cuando la información enviada es válida y los servicios de la arquitectura de microservicios se encuentran totalmente operativos e integrados.\n\nPrecondiciones: El microservicio de Catálogo de Productos está levantado y responde correctamente.\n\nResultado Esperado:\n\nCódigo HTTP: 201 Created"
+      },
+      "response": [
+        {
+          "name": "POST Crear Producto - Caso Exito",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Pachirisu EX\",\r\n    \"descripcion\" : \"PTCG pocket trade\",\r\n    \"precio\": 200\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://44.204.24.19:8083/api/carrito",
+              "protocol": "http",
+              "host": [
+                "44",
+                "204",
+                "24",
+                "19"
+              ],
+              "port": "8083",
+              "path": [
+                "api",
+                "carrito"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "",
+          "header": [],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\r\n    \"id\" : 1\r\n    \"nombre\": \"Pachirisu EX\",\r\n    \"descripcion\" : \"PTCG pocket trade\",\r\n    \"precio\": 200\r\n}"
+        }
+      ]
+    },
+    {
+      "name": "POST Crear carrito - Caso Exito",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n  {   \r\n    \"productoId\": 7,\r\n    \"cantidad\": 1\r\n  },\r\n  {\r\n    \"productoId\": 8,\r\n    \"cantidad\": 2\r\n  }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://44.204.24.19:8083/api/carrito",
+          "protocol": "http",
+          "host": [
+            "44",
+            "204",
+            "24",
+            "19"
+          ],
+          "port": "8083",
+          "path": [
+            "api",
+            "carrito"
+          ]
+        },
+        "description": "Este flujo tiene como objetivo validar el comportamiento correcto y feliz del ecosistema de microservicios cuando las peticiones cumplen con todas las reglas de negocio y los datos referenciados existen de forma íntegra en el sistema\n\nPrecondiciones:\n\nEl microservicio de Catálogo de Productos se encuentra levantado y operativo en su puerto correspondiente.\n\n**Resultado Esperado:** \\* **Código de Estado:** `201 Created`"
+      },
+      "response": [
+        {
+          "name": "POST Crear carrito - Caso Exito",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\r\n  {   \r\n    \"productoId\": 7,\r\n    \"cantidad\": 1\r\n  },\r\n  {\r\n    \"productoId\": 8,\r\n    \"cantidad\": 2\r\n  }\r\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://44.204.24.19:8083/api/carrito",
+              "protocol": "http",
+              "host": [
+                "44",
+                "204",
+                "24",
+                "19"
+              ],
+              "port": "8083",
+              "path": [
+                "api",
+                "carrito"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "",
+          "header": [],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\r\n    \"id\": 5,\r\n    \"productos\": [\r\n        {\r\n            \"productoId\": 7,\r\n            \"nombre\": \"Display Box: Pokémon TCG - Crown Zenith\",\r\n            \"precio\": 57990,\r\n            \"cantidad\": 1,\r\n            \"subtotal\": 57990\r\n        },\r\n        {\r\n            \"productoId\": 8,\r\n            \"nombre\": \"Pikachu EX\",\r\n            \"precio\": 150000,\r\n            \"cantidad\": 2,\r\n            \"subtotal\": 300000\r\n        }\r\n    ]\r\n}"
+        }
+      ]
+    },
+    {
+      "name": "POST Crear Carrito -  Recurso Inexistente",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n  {   \r\n    \"productoId\": 4,\r\n    \"cantidad\": 1\r\n  }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://44.204.24.19:8083/api/carrito",
+          "protocol": "http",
+          "host": [
+            "44",
+            "204",
+            "24",
+            "19"
+          ],
+          "port": "8083",
+          "path": [
+            "api",
+            "carrito"
+          ]
+        },
+        "description": "Este flujo evalúa la robustez del sistema y el control de excepciones de negocio. Se simula una petición donde se intenta operar con un recurso que no se encuentra mapeado o registrado en la base de datos del catálogo de productos.\"\r\nPRE-CONDICIÓN:\r\nEl microservicio de Catálogo se encuentra encendido y respondiendo de forma normal.\r\n\r\nEl identificador de producto enviado en el JSON (ej. productoId: 4) no existe en la base de datos del catálogo.\r\n\r\nResultado Esperado:\r\nCódigo de Estado: 404 Not Found."
+      },
+      "response": [
+        {
+          "name": "POST Crear Carrito -  Recurso Inexistente",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\r\n  {   \r\n    \"productoId\": 4,\r\n    \"cantidad\": 1\r\n  }\r\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://44.204.24.19:8083/api/carrito",
+              "protocol": "http",
+              "host": [
+                "44",
+                "204",
+                "24",
+                "19"
+              ],
+              "port": "8083",
+              "path": [
+                "api",
+                "carrito"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "",
+          "header": [],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\r\n    \"mensaje\": \"Producto no encontrado en el Catálogo con ID: 4\",\r\n    \"error\": \"Recurso no encontrado\",\r\n    \"timestamp\": \"2026-05-17T01:48:51.992124212\",\r\n    \"status\": 404\r\n}"
+        }
+      ]
+    },
+    {
+      "name": "POST Crear Carrito - Servicio Caido",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n  {   \r\n    \"productoId\": 4,\r\n    \"cantidad\": 1\r\n  }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://44.204.24.19:8083/api/carrito",
+          "protocol": "http",
+          "host": [
+            "44",
+            "204",
+            "24",
+            "19"
+          ],
+          "port": "8083",
+          "path": [
+            "api",
+            "carrito"
+          ]
+        },
+        "description": "Este flujo valida los mecanismos de resiliencia, tolerancia a fallos y aislamiento de infraestructura. Permite demostrar cómo reacciona el microservicio de Carrito cuando su dependencia crítica (Catálogo de productos) sufre una interrupción total del servicio de forma inesperada\n\nPrecondiciones:  \nEl microservicio de Carrito se encuentra activo y escuchando peticiones.  \nEl microservicio de Catálogo de productos ha sido detenido/apagado por completo, simulando una caída de red o de servidor en producción.\n\nResultado Esperado:  \nCódigo de Estado: 503 Service Unavailable."
+      },
+      "response": [
+        {
+          "name": "POST Crear Carrito - Servicio Caido",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\r\n  {   \r\n    \"productoId\": 4,\r\n    \"cantidad\": 1\r\n  }\r\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://44.204.24.19:8083/api/carrito",
+              "protocol": "http",
+              "host": [
+                "44",
+                "204",
+                "24",
+                "19"
+              ],
+              "port": "8083",
+              "path": [
+                "api",
+                "carrito"
+              ]
+            }
+          },
+          "status": "Service Unavailable",
+          "code": 503,
+          "_postman_previewlanguage": "",
+          "header": [],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\r\n    \"mensaje\": \"El servicio de Catálogo de productos no se encuentra disponible actualmente.\",\r\n    \"error\": \"Servicio no disponible\",\r\n    \"timestamp\": \"2026-05-17T01:53:44.501069855\",\r\n    \"status\": 503\r\n}"
+        }
+      ]
+    }
+  ]
+}
