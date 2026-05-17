@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.*;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -19,5 +20,4 @@ public class Carrito {
     @ElementCollection
     @CollectionTable(name = "carrito_productos", joinColumns = @JoinColumn(name = "carrito_id"))
     private List<ItemCarrito> productos = new ArrayList<>();
-
 }

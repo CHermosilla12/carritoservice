@@ -1,6 +1,5 @@
 package com.proyecto.carrito.dto;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CarritoDTO {
-    private Long id;
-    private List<ItemCarritoDetalleDTO> productos;
-
+public class ItemCarritoDTO {
+    private Long productoId;
+    private Integer cantidad;
 }

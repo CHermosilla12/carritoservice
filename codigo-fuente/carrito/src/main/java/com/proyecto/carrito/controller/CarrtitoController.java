@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 public class CarrtitoController {
 
     private final CarritoService service;
+
     public CarrtitoController(CarritoService service) {
         this.service = service;
     }
@@ -26,8 +27,8 @@ public class CarrtitoController {
 
     // 2. Crear un nuevo carrito agregándole un producto inicial
     @PostMapping
-    public ResponseEntity<CarritoDTO> agregarItem(@Valid @RequestBody CarritoCreateDTO carrito) {
-        CarritoDTO carritoDTO = service.crearCarritoDTO(carrito);
+    public ResponseEntity<CarritoDTO> agregarItem(@Valid @RequestBody List<CarritoCreateDTO> carritos) {
+        CarritoDTO carritoDTO = service.crearCarritoDTO(carritos);
         return new ResponseEntity<>(carritoDTO, HttpStatus.CREATED);
     }
 
@@ -41,18 +42,37 @@ public class CarrtitoController {
     // 4. Actualizar la cantidad de copias de una carta en un carrito específico
     @PutMapping("/{id}/productos/{productoId}")
     public ResponseEntity<CarritoDTO> actualizarCantidad(
-            @PathVariable Long id, 
-            @PathVariable Long productoId, 
-            @RequestParam int cantidad) {
-        CarritoDTO carritoDTO = service.actualizarCantidad(id, productoId, cantidad);
-        return ResponseEntity.ok(carritoDTO);
+            @PathVariable Long id,
+            @PathVariable Long productoId,
+            @RequestBody Map<String, Integer> body) { // <- Cambiado a @RequestBody
+
+        // Validamos que el JSON contenga la clave "cantidad" para evitar
+        // NullPointerException
+        if (body == null || !body.containsKey("cantidad")) {
+            throw new RuntimeException("El cuerpo de la petición debe contener el campo 'cantidad'");
+        }
+
+        int cantidad = body.get("cantidad");
+
+        // Tu service se queda exactamente igual como lo corregiste hoy
+        CarritoDTO carrito = service.actualizarCantidad(id, productoId, cantidad);
+        return ResponseEntity.ok(carrito);
     }
 
     // 5. Eliminar un carrito completo por su ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarItem(@PathVariable Long id) {
-        service.eliminarProductoDelCarrito(id);
+        service.eliminarCarrito(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/productos/{productoId}")
+    public ResponseEntity<CarritoDTO> eliminarProducto(
+            @PathVariable Long id,
+            @PathVariable Long productoId) {
+
+        CarritoDTO carritoActualizado = service.eliminarProductoDelCarrito(id, productoId);
+        return ResponseEntity.ok(carritoActualizado);
     }
 
     // 6. Vaciar absolutamente todos los carritos del sistema
@@ -65,13 +85,11 @@ public class CarrtitoController {
     @GetMapping("/{id}/total")
     public ResponseEntity<Map<String, Object>> obtenerTotalDelCarrito(@PathVariable Long id) {
         Integer total = service.calcularTotalDelCarrito(id);
-    
+
         return ResponseEntity.ok(Map.of(
-            "carritoId", id,
-            "totalCompra", total,
-            "moneda", "CLP",
-            "mensaje", "Total calculado para el carrito especificado"
-        ));
+                "carritoId", id,
+                "totalCompra", total,
+                "moneda", "CLP",
+                "mensaje", "Total calculado para el carrito especificado"));
     }
 }
-
