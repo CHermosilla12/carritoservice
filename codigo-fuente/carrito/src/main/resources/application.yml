@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: carrito
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:db-servicio}:3306/${DB_NAME:CarroDB}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${DB_USER:desarrollador}
+    password: ${DB_PASSWORD:Duoc.12345}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 8083
+producto:
+  service:
+    url: ${PRODUCTO_URL:http://localhost:8080}
+eureka:
+  client:
+    enabled: false
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui.html
